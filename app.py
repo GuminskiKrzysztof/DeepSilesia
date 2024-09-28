@@ -123,40 +123,6 @@ def train_regressor():
 
     return img
 
-def train_classifier():
-
-    iris_data = load_iris()
-    features = iris_data.data
-    labels = iris_data.target
-    
-    features = MinMaxScaler().fit_transform(features)
-    
-    num_features = features.shape[1]
-
-    feature_map = ZZFeatureMap(feature_dimension=num_features, reps=1)
-    feature_map.decompose().draw(output="mpl", style="clifford", fold=20)
-    
-    
-
-    # Prepare plot for results
-    for x, y_target, y_p in zip(X, y, y_predict):
-        if y_target == 1:
-            plt.plot(x[0], x[1], "bo")
-        else:
-            plt.plot(x[0], x[1], "go")
-        if y_target != y_p:
-            plt.scatter(x[0], x[1], s=200, facecolors="none", edgecolors="r", linewidths=2)
-    plt.plot([-1, 1], [1, -1], "--", color="black")
-    plt.title("Quantum Classification Result")
-    
-    # Save the plot to a PNG image
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    plt.close()
-
-    return img
-
 
 # Route for the main page
 @app.route('/')
