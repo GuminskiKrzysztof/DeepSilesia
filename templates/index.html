@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Classifier</title>
+</head>
+<body>
+    <h1>Quantum Classifier</h1>
+    <form id="train-form" method="post">
+        <button type="submit">Train Classifier</button>
+    </form>
+    <img id="result" style="display:none;" alt="Wynik klasyfikatora" />
+
+    <script>
+        const form = document.getElementById('train-form');
+        const img = document.getElementById('result');
+
+        form.onsubmit = function(event) {
+            event.preventDefault();
+
+            // Wysłanie zapytania POST do serwera Flask
+            fetch('/train', {
+                method: 'POST'
+            })
+            .then(response => response.blob())
+            .then(imageBlob => {
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                img.src = imageObjectURL;
+                img.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Błąd podczas fetch:', error);
+            });
+        };
+    </script>
+</body>
+</html>
