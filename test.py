@@ -10,6 +10,9 @@ from qiskit.quantum_info import SparsePauliOp
  
 from qiskit_ibm_runtime.fake_provider import FakeAlmadenV2
 
+ 
+from matplotlib import pyplot as plt
+
 # Create a new circuit with two qubits
 qc = QuantumCircuit(2)
  
@@ -26,6 +29,7 @@ qc.draw("mpl")
  
 observables_labels = ["IZ", "IX", "ZI", "XI", "ZZ", "XX"]
 observables = [SparsePauliOp(label) for label in observables_labels]
+
 
 # run on a simulator:
 
@@ -54,8 +58,6 @@ job_result = job.result()
 pub_result = job.result()[0]
 
 # Plot the result
- 
-from matplotlib import pyplot as plt
  
 values = pub_result.data.evs
  
