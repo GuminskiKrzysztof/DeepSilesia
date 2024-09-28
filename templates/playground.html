@@ -8,17 +8,32 @@
     </head>
     <body>
         <header>
-            <nav>
-                <h1>Quantum Artificial Inteligence</h1>
-                <a href="../">Home</a>
-                <a href="manual">Manual</a>
-                <a href="">Playground</a>
-            </nav>
+            <div class="header-container">
+                <h1 class="title">Quantum Artificial Intelligence</h1>
+                <nav>
+                    <a href="../">Home</a>
+                    <a href="manual">Manual</a>
+                    <a href="">Playground</a>
+                    <a href="compare">AI vs QAI</a>
+                </nav>
+            </div>
         </header>
     
         <div class="content">
-            <div class="right">
-                <img src="/images/giphy.gif" alt="Bloob";>
-            </div>
+
+            <h1>Playground</h1>
+
+            <h2>Train Classifier</h2>
+            <form action="/train" method="post">
+                <button type="submit">Train Classifier</button>
+            </form>
+            
+
+            <h2>Train Regression</h2>
+            <form action="/regress" method="post">
+                <button type="submit">Train Regression</button>
+            </form>
+            
+        </div>
     </body>
 </html>

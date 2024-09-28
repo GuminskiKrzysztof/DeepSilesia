@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Compare</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mystyle.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="header-container">
+                <h1 class="title">Quantum Artificial Intelligence</h1>
+                <nav>
+                    <a href="../">Home</a>
+                    <a href="manual">Manual</a>
+                    <a href="playground">Playground</a>
+                    <a href="">AI vs QAI</a>
+                </nav>
+            </div>
+        </header>
+
+        <h1>Testowanie Klasyfikatorów</h1>
+
+        <!-- Kontener flexbox dla klasyfikatorów -->
+        <div class="classifier-container">
+            <!-- Klasyfikator Kwantowy -->
+            <div class="classifier">
+                <h2>Klasyfikator Kwantowy</h2>
+                <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
+                <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" />
+            </div>
+
+            <!-- Klasyfikator Klasyczny -->
+            <div class="classifier">
+                <h2>Klasyfikator Klasyczny</h2>
+                <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
+                <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" />
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('quantum-classifier-btn').onclick = function() {
+                fetch('/train_quantum', { method: 'POST' })
+                    .then(response => response.blob())
+                    .then(imageBlob => {
+                        const imageObjectURL = URL.createObjectURL(imageBlob);
+                        document.getElementById('quantum-classifier-img').src = imageObjectURL;
+                    })
+                    .catch(error => console.error('Błąd:', error));
+            };
+
+            document.getElementById('classical-classifier-btn').onclick = function() {
+                fetch('/train_classical', { method: 'POST' })
+                    .then(response => response.blob())
+                    .then(imageBlob => {
+                        const imageObjectURL = URL.createObjectURL(imageBlob);
+                        document.getElementById('classical-classifier-img').src = imageObjectURL;
+                    })
+                    .catch(error => console.error('Błąd:', error));
+            };
+        </script>
+
+    </body>
+</html>
