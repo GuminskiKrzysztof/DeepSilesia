@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testowanie Klasyfikatorów</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        img {
+            display: block;
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Testowanie Klasyfikatorów</h1>
+
+    <h2>Klasyfikator Kwantowy</h2>
+    <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
+    <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" />
+
+    <h2>Klasyfikator Klasyczny</h2>
+    <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
+    <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" />
+
+    <script>
+        document.getElementById('quantum-classifier-btn').onclick = function() {
+            fetch('/train_quantum', { method: 'POST' })
+                .then(response => response.blob())
+                .then(imageBlob => {
+                    const imageObjectURL = URL.createObjectURL(imageBlob);
+                    document.getElementById('quantum-classifier-img').src = imageObjectURL;
+                })
+                .catch(error => console.error('Błąd:', error));
+        };
+
+        document.getElementById('classical-classifier-btn').onclick = function() {
+            fetch('/train_classical', { method: 'POST' })
+                .then(response => response.blob())
+                .then(imageBlob => {
+                    const imageObjectURL = URL.createObjectURL(imageBlob);
+                    document.getElementById('classical-classifier-img').src = imageObjectURL;
+                })
+                .catch(error => console.error('Błąd:', error));
+        };
+    </script>
+
+</body>
+</html>

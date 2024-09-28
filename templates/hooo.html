@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trening modelu VQC i klasycznego</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #4A90E2;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trening modelu VQC i klasycznego</h1>
+    
+    <h2>Klasyfikacja</h2>
+    <button id="trainQuantumClassifier">Trenuj klasyfikator kwantowy</button>
+    <button id="trainClassicalClassifier">Trenuj klasyfikator klasyczny</button>
+
+    <h2>Regresja</h2>
+    <button id="trainQuantumRegressor">Trenuj regresor kwantowy</button>
+    <button id="trainClassicalRegressor">Trenuj regresor klasyczny</button>
+
+    <h2>Wyniki:</h2>
+    <div id="results">
+        <p>Czas treningu: <span id="trainingTime"></span> s</p>
+        <p>Wynik na zestawie treningowym: <span id="trainScore"></span></p>
+        <p>Wynik na zestawie testowym: <span id="testScore"></span></p>
+    </div>
+
+    <h2>Wykres:</h2>
+    <img id="plotImage" src="" alt="Wykres funkcji celu" style="display:none; max-width: 100%; height: auto;">
+
+    <script>
+        $(document).ready(function() {
+            // Function to handle training requests
+            function trainModel(url, resultType) {
+                $.post(url, function(data) {
+                    $("#trainingTime").text(data.execution_time ? data.execution_time.toFixed(4) : "N/A");
+                    $("#trainScore").text(data.train_score || "N/A");
+                    $("#testScore").text(data.test_score || "N/A");
+                    $("#plotImage").attr("src", "data:image/png;base64," + btoa(data)); // Show the plot
+                    $("#plotImage").show();
+                });
+            }
+
+            // Quantum Classifier
+            $("#trainQuantumClassifier").click(function() {
+                trainModel("/train", "quantum_classifier");
+            });
+
+            // Classical Classifier
+            $("#trainClassicalClassifier").click(function() {
+                trainModel("/classical_train", "classical_classifier");
+            });
+
+            // Quantum Regressor
+            $("#trainQuantumRegressor").click(function() {
+                trainModel("/regress", "quantum_regressor");
+            });
+
+            // Classical Regressor
+            $("#trainClassicalRegressor").click(function() {
+                trainModel("/classical_regress", "classical_regressor");
+            });
+        });
+    </script>
+</body>
+</html>

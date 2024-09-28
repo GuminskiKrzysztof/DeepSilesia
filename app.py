@@ -1,3 +1,4 @@
+import datetime
 import io
 import numpy as np
 import matplotlib
@@ -5,6 +6,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, send_file
 from IPython.display import clear_output
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.datasets import make_classification
 from qiskit import QuantumCircuit
 from qiskit.circuit import Parameter
 from qiskit.circuit.library import RealAmplitudes, ZZFeatureMap
@@ -42,8 +46,11 @@ def train_classifier():
     )
 
     # Train the classifier
+    date1 = datetime.datetime.now()
     classifier.fit(X, y)
-
+    date2 = datetime.datetime.now()
+    diff1 = date2 - date1
+    print(diff1)
     # Predict the data points
     y_predict = classifier.predict(X)
 
@@ -124,23 +131,107 @@ def train_regressor():
     return img
 
 
+# Funkcja do trenowania klasyfikatora klasycznego
+def train_classical_classifier():
+    # Generowanie losowych danych do klasyfikacji
+    num_samples = 100  # Liczba próbek
+    num_features = 2   # Liczba cech
+    num_classes = 2    # Liczba klas
+
+    X, y = make_classification(n_samples=num_samples, n_features=num_features, n_classes=num_classes, n_informative=2, n_redundant=0, random_state=42)
+
+    # Podział na zbiór treningowy i testowy
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    # Tworzenie modelu regresji logistycznej
+    model = LogisticRegression(max_iter=200)
+    date3 = datetime.datetime.now()
+    model.fit(X_train, y_train)
+    date4 = datetime.datetime.now()
+    diff2 = date4 - date3
+    print(diff2)
+
+    # Predykcja dla zbioru testowego
+    y_predict = model.predict(X_test)
+
+    # Przygotowanie wykresu dla wyników
+    for i in range(len(X_test)):
+        plt.scatter(X_test[i][0], X_test[i][1], c='blue' if y_predict[i] == y_test[i] else 'red')
+
+    plt.title("Wynik klasyfikacji klasycznej (Regresja Logistyczna)")
+    plt.xlabel("Cechy 1")
+    plt.ylabel("Cechy 2")
+    
+    # Zapis wykresu do obrazu PNG
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return img
+
+# Funkcja do trenowania regresora klasycznego
+def train_classical_regressor():
+    num_samples = 50
+    X = np.linspace(-3, 3, num_samples).reshape(-1, 1)
+    y = np.sin(X) + 0.1 * np.random.normal(size=X.shape)
+
+    # Tworzenie modelu regresji liniowej
+    model = LinearRegression()
+    model.fit(X, y)
+
+    # Predykcja za pomocą modelu
+    X_pred = np.linspace(-3, 3, 100).reshape(-1, 1)
+    y_pred = model.predict(X_pred)
+
+    # Przygotowanie wykresu z predykcjami
+    plt.plot(X, y, "bo", label="Dane treningowe")  # Wykres punktów danych treningowych
+    plt.plot(X_pred, y_pred, "g-", label="Predykcja modelu")  # Wykres predykcji modelu
+
+    # Dodanie etykiet i legendy do wykresu
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title("Wynik regresji klasycznej (Regresja Liniowa)")
+    plt.legend()
+
+    # Zapis wykresu do obrazu w pamięci
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return img
+
+
 # Route for the main page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index2.html')
 
 # Route for training classifier
-@app.route('/train', methods=['POST'])
+@app.route('/train_quantum', methods=['POST'])
 def train():
     img = train_classifier()
     return send_file(img, mimetype='image/png')
 
 # Route for training regressor
-@app.route('/regress', methods=['POST'])
+@app.route('/regress_quantum', methods=['POST'])
 def regress():
     img = train_regressor()
     return send_file(img, mimetype='image/png')
 
+# Route dla treningu klasyfikatora klasycznego
+@app.route('/train_classical', methods=['POST'])
+def train_classical():
+    img = train_classical_classifier()
+    return send_file(img, mimetype='image/png')
+
+# Route dla treningu regresora klasycznego
+@app.route('/regress_classical', methods=['POST'])
+def regress_classical():
+    img = train_classical_regressor()
+    return send_file(img, mimetype='image/png')
+
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5003)
