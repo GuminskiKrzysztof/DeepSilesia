@@ -45,6 +45,7 @@ mapped_observables = [
 ]
  
 job = estimator.run([(isa_circuit, mapped_observables)])
+print("jestem tu")
 result = job.result()
  
 # This is the result of the entire submission.  You submitted one Pub,
@@ -62,6 +63,7 @@ pub_result = job.result()[0]
 values = pub_result.data.evs
  
 errors = pub_result.data.stds
+print("tutej tu")
  
 # plotting graph
 plt.plot(observables_labels, values, '-o')
