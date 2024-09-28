@@ -5,9 +5,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # Generowanie przykładowych danych
-np.random.seed(0)  # Ustawienie ziarna dla powtarzalności
-X = 2 * np.random.rand(100, 1)  # 100 losowych punktów między 0 a 2
-y = 4 + 3 * X + np.random.randn(100, 1)  # y = 4 + 3x + szum
+np.random.seed(0)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
 
 # Dzielimy dane na zestawy treningowe i testowe
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
