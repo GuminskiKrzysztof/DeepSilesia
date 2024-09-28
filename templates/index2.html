@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testowanie Klasyfikatorów</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        img {
+            display: block;
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+        .execution-time {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Testowanie Klasyfikatorów</h1>
+
+    <h2>Klasyfikator Kwantowy</h2>
+    <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
+    <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" />
+    <div id="quantum-execution-time" class="execution-time"></div> <!-- For execution time -->
+
+    <h2>Klasyfikator Klasyczny</h2>
+    <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
+    <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" />
+    <div id="classical-execution-time" class="execution-time"></div> <!-- For execution time -->
+
+    <script>
+        document.getElementById('quantum-classifier-btn').onclick = function() {
+            fetch('/train_quantum', { method: 'POST' })
+                .then(response => {
+                    // Set image source
+                    return response.blob().then(imageBlob => {
+                        const imageObjectURL = URL.createObjectURL(imageBlob);
+                        document.getElementById('quantum-classifier-img').src = imageObjectURL;
+                        // Return execution time from headers
+                        const executionTime = response.headers.get('Execution-Time');
+                        document.getElementById('quantum-execution-time').innerText = `Czas wykonania: ${executionTime} sekund`;
+                    });
+                })
+                .catch(error => console.error('Błąd:', error));
+        };
+
+        document.getElementById('classical-classifier-btn').onclick = function() {
+            fetch('/train_classical', { method: 'POST' })
+                .then(response => response.blob())
+                .then(imageBlob => {
+                    const imageObjectURL = URL.createObjectURL(imageBlob);
+                    document.getElementById('classical-classifier-img').src = imageObjectURL;
+                    // Clear previous execution time
+                    document.getElementById('classical-execution-time').innerText = '';
+                })
+                .catch(error => console.error('Błąd:', error));
+        };
+    </script>
+
+</body>
+</html>

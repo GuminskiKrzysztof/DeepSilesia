@@ -29,6 +29,8 @@ import pandas as pd
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from qiskit_algorithms.utils import algorithm_globals
+from qiskit.primitives import StatevectorSampler
+
 
 algorithm_globals.random_seed = 123
 
@@ -61,7 +63,7 @@ from qiskit_algorithms.optimizers import COBYLA
 optimizer = COBYLA(maxiter=100)
 
 
-sampler = Sampler()
+sampler = StatevectorSampler()
 
 
 objective_func_vals = []
