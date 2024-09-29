@@ -2,6 +2,8 @@
 <html>
     <head>  
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
         <title>Compare</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
 
@@ -12,8 +14,9 @@
     <body>
         <header>
             <div class="header-container">
-                <h1 class="title">Quantum Artificial Intelligence</h1>
-                <nav>
+                <a href="../">
+                    <h1 class="title">Quantum Artificial Intelligence</h1>
+                </a>                <nav>
                     <a href="../">Home</a>
                     <a href="manual">Manual</a>
                     <a href="playground">Playground</a>
@@ -23,28 +26,27 @@
         </header>
 
         <div class="content">
-            <h1>Testowanie Klasyfikatorów</h1>
-          
+
 
             <div class="slide-container">
-                <label for="samples-slider">Number of data samples:</label>
+                <p for="samples-slider">Number of data samples:</p>
                 <input type="range" min="10" max="150" value="75" class="slider" id="myRange">
                 <p>Value: <span id="num_samples"></span></p>
             </div>
             
             <div class="classifier-container">
-                <!-- Klasyfikator Klasyczny -->
+                <!-- Classical Classification-->
                 <div class="classifier">
                     <h2>Klasyfikator Klasyczny</h2>
-                    <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
+                    <button class="button-yellow" id="classical-classifier-btn">Train Classical Classification</button>
                     <p id="classical-execution-time"></p>
                     <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" style="display:none;" />
                     
                 </div>
-                <!-- Klasyfikator Kwantowy -->
+                <!-- Quantum Classification -->
                 <div class="classifier">
-                    <h2>Klasyfikator Kwantowy</h2>
-                    <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
+                    <h2>Quantum Classification</h2>
+                    <button class="button-yellow" id="quantum-classifier-btn">Train Quantum Classification</button>
                     <p id="quantum-execution-time"></p>
                     <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" style="display:none;" />
                     

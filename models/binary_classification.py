@@ -27,19 +27,18 @@ import time
 from io import BytesIO 
 
 class Binary_classification:
-    def __init__(self, num_samples=100, random_seed=42, num_inputs=4, num_qubits=4):
+    def __init__(self, num_samples=50, random_seed=42, num_inputs=4, num_qubits=4):
         self.random_seed = random_seed
         self.num_samples = num_samples
         self.num_inputs = num_inputs
         self.num_qubits = num_qubits
-        print(num_samples)
 
     def generate_data(self):
         X = 2 * algorithm_globals.random.random((self.num_samples, self.num_inputs)) - 1
         y = 2 * (np.sum(X, axis=1) >= 0).astype(int) - 1
         return X, y
 
-    def train_clas(self, classifier, X, y):
+    def train_class(self, classifier, X, y):
         start_time = datetime.datetime.now()
         classifier.fit(X, y)
         end_time = datetime.datetime.now()
@@ -71,7 +70,7 @@ class Binary_classification:
         estimator_qnn = EstimatorQNN(circuit=qc)
         classifier = NeuralNetworkClassifier(estimator_qnn, optimizer=COBYLA(maxiter=60))
 
-        execution_time, y_predict = self.train_clas(classifier, X, y)
+        execution_time, y_predict = self.train_class(classifier, X, y)
         img = self.plot_results(X, y, y_predict, "Quantum Classification Result")
 
         return img, execution_time
@@ -80,7 +79,7 @@ class Binary_classification:
         X, y = self.generate_data()
         classifier = LogisticRegression()
 
-        execution_time, y_predict = self.train_clas(classifier, X, y)
+        execution_time, y_predict = self.train_class(classifier, X, y)
         img = self.plot_results(X, y, y_predict, "Classical Classification Result")
 
         return img, execution_time

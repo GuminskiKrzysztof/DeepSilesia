@@ -1,6 +1,7 @@
-from flask import Flask, redirect, url_for, render_template, send_file, jsonify, request
-from models.linear_regression import Linear_regression
+from flask import Flask, redirect, url_for, render_template, send_file, jsonify, request, send_from_directory
+from models.linear_regression import LinearRegressionModel
 from models.binary_classification import Binary_classification
+from models.iris_classification import IrisQuantumClassifier
 import os
 
 
@@ -32,9 +33,16 @@ def train():
 
 @app.route('/regress', methods=['POST'])
 def regress():
-    lr = Linear_regression()
-    img = lr.train_regression()
-    return send_file(img, mimetype='image/png')
+    lr = LinearRegressionModel()
+    img, execution_time = lr.execute_quantum_regression()
+    return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
+
+@app.route('/iris', methods=['POST'])
+def iris():
+    ir = IrisQuantumClassifier()
+    img, execution_time, train_score, test_score = ir.execute_classification()
+    return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
+
 
 @app.route("/compare")
 def compare():
@@ -67,6 +75,16 @@ def train_classical():
     # Zwróć obraz i czas wykonania
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
 
+
+
+
+# @app.route('/images/<path:filename>')
+# def send_image(filename):
+#     return send_file(os.path.join('images', filename))
+
+# @app.route('/strings/<path:filename>')
+# def send_file(filename):
+#     return send_from_directory(os.path.join('strings', filename))
 
 if __name__ == "__main__":
     app.run(debug=True)

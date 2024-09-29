@@ -23,6 +23,7 @@ from flask import Flask, redirect, url_for, render_template, send_file, jsonify
 import base64
 import time
 from io import BytesIO 
+import os
 
 class Binary_classification:
     def __init__(self, num_samples=100, random_seed=42, num_inputs=4, num_qubits=4):
@@ -57,11 +58,12 @@ class Binary_classification:
         plt.plot([-1, 1], [1, -1], "--", color="black")
         plt.title(title)
 
-        img = io.BytesIO()
-        plt.savefig(img, format='png')
-        img.seek(0)
+        output_dir = "images"
+        os.makedirs(output_dir, exist_ok=True)
+        file_path = os.path.join(output_dir, "classification.png")
+        plt.savefig(file_path, format='png')
         plt.close()
-        return img
+        return file_path 
 
     def train_classifier(self):
         X, y = self.generate_data()
@@ -70,6 +72,12 @@ class Binary_classification:
         classifier = NeuralNetworkClassifier(estimator_qnn, optimizer=COBYLA(maxiter=60))
 
         execution_time, y_predict = self.train_class(classifier, X, y)
-        img = self.plot_results(X, y, y_predict, "Quantum Classification Result")
+        file_path = self.plot_results(X, y, y_predict, "Quantum Classification Result")
 
-        return img, execution_time
+        return file_path, execution_time
+
+if __name__ == "__main__":
+    binary_classifier = Binary_classification()
+    plot_path, exec_time = binary_classifier.train_classifier()
+    print(f"Wykres zapisano pod ścieżką: {plot_path}")
+    print(f"Czas wykonania: {exec_time} sekund")

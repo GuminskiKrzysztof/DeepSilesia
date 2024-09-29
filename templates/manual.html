@@ -7,9 +7,20 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     </head>
     <body>
+
+        <div class="chat-button" onclick="toggleText()">💬</div>
+
+        <div class="bubble-message" id="bubbleMessage">
+            Hello! I’m your friendly chatbot assistant here to guide you through the <strong>fascinating world of Quantum Computing</strong>. 🌟 I’m currently in progress, but I’m eager to help you explore various topics, from basic concepts to advanced applications. See you soon! 😊
+        </div>
+
+        <script src="/static/scripts/chatbot.js"></script>
+
         <header>
             <div class="header-container">
-                <h1 class="title">Quantum Artificial Intelligence</h1>
+                <a href="../">
+                    <h1 class="title">Quantum Artificial Intelligence</h1>
+                </a>
                 <nav>
                     <a href="../">Home</a>
                     <a href="">Manual</a>
@@ -168,7 +179,11 @@
         <section class="info-section">
             <div class="info-card">
                 <div class="card-content">
-                    <p>These key principles—superposition, entanglement, decoherence, and interference—are the foundation of quantum mechanics and are what make quantum computing such a promising and powerful new technology. By leveraging the strange behaviors of particles at the quantum level, quantum computers can tackle problems that are impossible for classical computers to solve.</p>
+                    <h2>Quantum Advantage vs. Quantum Utility</h2>
+                    <p>Quantum advantage refers to a hypothetical quantum computer that can outperform all classical supercomputers for specific problems. It provides significant benefits in terms of speed, cost, or accuracy compared to classical methods, representing a clear breakthrough in computational capability.
+                        <br><br>In contrast, quantum utility refers to quantum computations that deliver reliable solutions to problems that classical computing cannot address. While it indicates the usefulness of quantum computing, it does not necessarily prove that quantum methods achieve a speed-up over all classical approaches.
+                        <br><br>The key difference between the two concepts lies in their scope: quantum advantage implies superior performance, while quantum utility indicates practical usability. Additionally, quantum advantage suggests a breakthrough in computational power, whereas quantum utility reflects current practical applications of quantum computing.
+                        </p>
                 </div>
             </div>
             <div class="info-card">

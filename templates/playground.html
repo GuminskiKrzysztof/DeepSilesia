@@ -17,10 +17,11 @@
 
     </head>
     <body>
-        import { myFunction } from './myModule.js';
         <header>
             <div class="header-container">
-                <h1 class="title">Quantum Artificial Intelligence</h1>
+                <a href="../">
+                    <h1 class="title">Quantum Artificial Intelligence</h1>
+                </a>
                 <nav>
                     <a href="../">Home</a>
                     <a href="manual">Manual</a>
@@ -33,25 +34,23 @@
         <div class="content">            
             <div class="classifier-container">
                 <div class="button-container-vertical">
-                    <button type="button" class="button-yellow" id="code1-button"> 
+                    <button type="button" class="button-yellow" id="classification-button"> 
                         Classification
                     </button> 
-                    <button type="button" class="button-yellow" id="code2-button"> 
+                    <button type="button" class="button-yellow" id="regression-button"> 
                         Regression
                     </button> 
-                    <button type="button" class="button-yellow" id="code3-button"> 
+                    <button type="button" class="button-yellow" id="iris-button"> 
                         Iris classification
                     </button> 
                 </div>
                 <div class="classifier">
-                    <h2>Code editor</h2>
+                    <p id="code-editor">Code editor</p>
                     <div class="code-editor-div">
-                        <textarea id="code" name="code" class="code-editor-input"> 
-                        </textarea> 
-                        <button type="button" class="button-yellow" onclick="evaluatePython()">Run</button> 
-                        
-                        <textarea id="output" class="textarea-output" rows="5" readonly> 
-                        </textarea> 
+                        <textarea  1500px id="code" name="code" class="code-editor-input"></textarea> 
+                        <button type="button" class="button-yellow" id="run-button">Run</button> 
+                        <p id="run-info"></p>
+                        <textarea id="output" class="textarea-output" rows="5" readonly></textarea> 
                     </div> 
                 </div>
                 <div id="chart" class="classifier">
@@ -65,6 +64,7 @@
                 integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
             <script src='/static/scripts/code_editor.js'></script> 
+            <script src='/static/scripts/playground.js'></script>
             
         </div>
     </body>
