@@ -1,4 +1,5 @@
 import io
+import datetime
 import numpy as np
 import matplotlib
 matplotlib.use('Agg') 
@@ -13,26 +14,31 @@ from qiskit_algorithms.utils import algorithm_globals
 from qiskit_machine_learning.algorithms.classifiers import NeuralNetworkClassifier, VQC
 from qiskit_machine_learning.algorithms.regressors import NeuralNetworkRegressor, VQR
 from qiskit_machine_learning.neural_networks import SamplerQNN, EstimatorQNN
+from sklearn.linear_model import LinearRegression
 from qiskit_machine_learning.circuit.library import QNNCircuit
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import MinMaxScaler
+import time
 
 class Linear_regression:
     algorithm_globals.random_seed = 42
 
-    # Train Regression
-    def train_regression(__self__):
-        num_samples = 20
+    def __init__(self, num_samples=50, random_seed=42, num_inputs=4):
+        self.num_samples = num_samples
+        self.num_inputs = num_inputs
+        self.random_seed = random_seed
+    
+
+    def train_regression(self):
+        num_samples = self.num_samples
         eps = 0.2
         lb, ub = -np.pi, np.pi
-        X_ = np.linspace(lb, ub, num=50).reshape(50, 1)
+        X_ = np.linspace(lb, ub, num=num_samples).reshape(50, 1)
         f = lambda x: np.sin(x)
 
-        # Generate random training data
         X = (ub - lb) * algorithm_globals.random.random([num_samples, 1]) + lb
         y = f(X[:, 0]) + eps * (2 * algorithm_globals.random.random(num_samples) - 1)
 
-        # Construct quantum circuits for feature map and ansatz
         param_x = Parameter("x")
         feature_map = QuantumCircuit(1, name="fm")
         feature_map.ry(param_x, 0)
@@ -41,38 +47,64 @@ class Linear_regression:
         ansatz = QuantumCircuit(1, name="vf")
         ansatz.ry(param_y, 0)
 
-        # Combine feature map and ansatz into a QNN circuit
         qc = QNNCircuit(feature_map=feature_map, ansatz=ansatz)
         regression_estimator_qnn = EstimatorQNN(circuit=qc)
 
-        # Define the regressor
         regressor = NeuralNetworkRegressor(
             neural_network=regression_estimator_qnn,
             loss="squared_error",
             optimizer=L_BFGS_B(maxiter=5),
         )
 
-        # Train the regressor model
+        start_time = datetime.datetime.now()
         regressor.fit(X, y)
+        end_time = datetime.datetime.now()
+        execution_time = (end_time - start_time).total_seconds()
 
-        # Prepare final plot with predictions
-        plt.plot(X_, f(X_), "r--", label="True function")  # Plot the true sine function
-        plt.plot(X, y, "bo", label="Training data")  # Plot training data points
+        plt.plot(X_, f(X_), "ra--", label="True function")
+        plt.plot(X, y, "bo", label="Training data")
 
-        # Predict the result using the trained regressor
         y_ = regressor.predict(X_)
-        plt.plot(X_, y_, "g-", label="Model prediction")  # Plot predictions from the model
+        plt.plot(X_, y_, "g-", label="Model prediction")
 
-        # Add labels and legend to the plot
         plt.xlabel("X")
         plt.ylabel("Y")
         plt.title("Quantum Regression Result")
         plt.legend()
 
-        # Save the plot to an image in memory
         img = io.BytesIO()
         plt.savefig(img, format='png')
         img.seek(0)
         plt.close()
 
-        return img
+        return img, execution_time
+
+
+    def train_classical_regressor(self):
+        num_samples = self.num_samples
+        X = np.linspace(-3, 3, num_samples).reshape(-1, 1)
+        y = np.sin(X) + 0.1 * np.random.normal(size=X.shape)
+
+        model = LinearRegression()
+        start_time = datetime.datetime.now()
+        model.fit(X, y)
+        end_time = datetime.datetime.now()
+        execution_time = (end_time - start_time).total_seconds()
+
+        X_pred = np.linspace(-3, 3, 100).reshape(-1, 1)
+        y_pred = model.predict(X_pred)
+
+        plt.plot(X, y, "bo", label="Dane treningowe")
+        plt.plot(X_pred, y_pred, "g-", label="Predykcja modelu")
+
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.title("Wynik regresji klasycznej (Regresja Liniowa)")
+        plt.legend()
+
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        plt.close()
+
+        return img, execution_time

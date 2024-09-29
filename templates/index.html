@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     </head>
+    
     <body>
         <header>
             <div class="header-container">
@@ -18,14 +19,48 @@
                 </nav>
             </div>
         </header>
-        <div class="chat-container">
-            <div class="chat-bubble">Do you think computers are too slow?</div>
-            <div class="chat-bubble">Are you fascinated by physics—especially quantum physics?</div>
-            <div class="chat-bubble">Do you want to peek into the future of technology?</div>
+        <div class="message-container">
+            <div class="message-bubble message-bubble-yellow">Do you think computers are too slow?</div>
+            <div class="message-bubble message-bubble-white">Are you fascinated by physics — especially quantum physics?</div>
+            <div class="message-bubble message-bubble-purple">Do you want to peek into the future of technology?</div>
         </div>
-        <h2>Imagine a world where complex problems, which take today’s computers years to solve, are tackled in mere seconds. 
-        This is the promise of <span class="highlight">quantum computing</span>—a revolutionary technology that uses the strange, 
-        mind-bending principles of quantum physics to transform how we compute and process information. <h2>
-        <h2>Take a deep dive into the world of quantum computers! <h2>
+        <div class="main-text">
+            <h2>Imagine a world where complex problems, which take today’s computers years to solve, are tackled in mere seconds. 
+                This is the promise of <span class="highlight">quantum computing</span> — a revolutionary technology that uses the strange, 
+                mind-bending principles of quantum physics to transform how we compute and process information.</h2>
+        </div>
+        <div class="main-text">
+            <h2>
+                Explore the fascinating realm of quantum computers and unlock their potential!
+            </h2>   
+            <h2>
+            <a href="manual" class="button-yellow">Check it out</a>         
+            </h2>
+        </div>
+        <div class="info-section">
+            <div class="info-card">
+                <div class="card-content">
+                    <h2>🌌 Dive into Quantum Computing!</h2>
+                    <p>With us, you’ll learn what quantum computers are and how they work.</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="card-content">
+                    <h2>🧠 Explore Machine Learning!</h2>
+                    <p>You’ll explore how machine learning (ML) algorithms can be used in quantum computing, and you’ll even get to see some machine learning algorithms implemented with Qiskit.</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="card-content">
+                    <h2>🚀 Code in Our Playground!</h2>
+                    <p>Best of all, you'll have the opportunity to try writing your own code in our playground!</p>
+                </div>
+            </div>
+            <div class="button-container-horizontal">
+                <h2>       
+                <a href="manual" class="button-yellow">Learn More</a>
+                <a href="playground" class="button-yellow">Try the Playground</a>
+                </h2>
+        </div>
     </body>
 </html>

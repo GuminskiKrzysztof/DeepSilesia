@@ -1,6 +1,8 @@
-from flask import Flask, redirect, url_for, render_template, send_file
+from flask import Flask, redirect, url_for, render_template, send_file, jsonify, request
 from models.linear_regression import Linear_regression
-from models.binary_classifier import Binary_classifier
+from models.binary_classification import Binary_classification
+import os
+
 
 app = Flask(__name__)
 
@@ -24,7 +26,7 @@ def index():
 
 @app.route('/train', methods=['POST'])
 def train():
-    bc = Binary_classifier()
+    bc = Binary_classification()
     img = bc.train_classifier()
     return send_file(img, mimetype='image/png')
 
@@ -41,16 +43,30 @@ def compare():
 
 @app.route('/train_quantum', methods=['POST'])
 def train_q():
-    bc = Binary_classifier()
-    img = bc.train_classifier()
-    return send_file(img, mimetype='image/png')
+    data = request.get_json()  # Pobranie danych JSON
+    num_samples = int(data['num_samples'])  # Odczytanie wartości num_samples
+    print(num_samples)
+    # Inicjalizacja klasyfikatora z odpowiednią liczbą próbek
+    bc = Binary_classification(num_samples)
+    img, execution_time = bc.train_classifier()
+
+    # Zwróć obraz i czas wykonania
+    return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
+
 
 
 @app.route('/train_classical', methods=['POST'])
 def train_classical():
-    bc = Binary_classifier()
-    img = bc.train_classical_classifier()
-    return send_file(img, mimetype='image/png')
+    data = request.get_json()  # Pobranie danych JSON
+    num_samples = int(data['num_samples'])  # Odczytanie wartości num_samples
+    
+    # Inicjalizacja klasyfikatora z odpowiednią liczbą próbek
+    bc = Binary_classification(num_samples)
+    img, execution_time = bc.train_classical_classifier()
+
+    # Zwróć obraz i czas wykonania
+    return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
+
 
 if __name__ == "__main__":
     app.run(debug=True)

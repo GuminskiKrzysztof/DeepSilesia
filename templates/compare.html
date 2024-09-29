@@ -3,9 +3,12 @@
     <head>  
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Compare</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mystyle.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     </head>
+    
     <body>
         <header>
             <div class="header-container">
@@ -19,46 +22,39 @@
             </div>
         </header>
 
-        <h1>Testowanie Klasyfikatorów</h1>
+        <div class="content">
+            <h1>Testowanie Klasyfikatorów</h1>
+          
 
-        <!-- Kontener flexbox dla klasyfikatorów -->
-        <div class="classifier-container">
-            <!-- Klasyfikator Kwantowy -->
-            <div class="classifier">
-                <h2>Klasyfikator Kwantowy</h2>
-                <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
-                <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" />
+            <div class="slide-container">
+                <label for="samples-slider">Number of data samples:</label>
+                <input type="range" min="10" max="150" value="75" class="slider" id="myRange">
+                <p>Value: <span id="num_samples"></span></p>
             </div>
+            
+            <div class="classifier-container">
+                <!-- Klasyfikator Klasyczny -->
+                <div class="classifier">
+                    <h2>Klasyfikator Klasyczny</h2>
+                    <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
+                    <p id="classical-execution-time"></p>
+                    <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" style="display:none;" />
+                    
+                </div>
+                <!-- Klasyfikator Kwantowy -->
+                <div class="classifier">
+                    <h2>Klasyfikator Kwantowy</h2>
+                    <button id="quantum-classifier-btn">Trenuj Klasyfikator Kwantowy</button>
+                    <p id="quantum-execution-time"></p>
+                    <img id="quantum-classifier-img" src="" alt="Wynik klasyfikacji kwantowej" style="display:none;" />
+                    
+                </div>
 
-            <!-- Klasyfikator Klasyczny -->
-            <div class="classifier">
-                <h2>Klasyfikator Klasyczny</h2>
-                <button id="classical-classifier-btn">Trenuj Klasyfikator Klasyczny</button>
-                <img id="classical-classifier-img" src="" alt="Wynik klasyfikacji klasycznej" />
+                
             </div>
         </div>
 
-        <script>
-            document.getElementById('quantum-classifier-btn').onclick = function() {
-                fetch('/train_quantum', { method: 'POST' })
-                    .then(response => response.blob())
-                    .then(imageBlob => {
-                        const imageObjectURL = URL.createObjectURL(imageBlob);
-                        document.getElementById('quantum-classifier-img').src = imageObjectURL;
-                    })
-                    .catch(error => console.error('Błąd:', error));
-            };
-
-            document.getElementById('classical-classifier-btn').onclick = function() {
-                fetch('/train_classical', { method: 'POST' })
-                    .then(response => response.blob())
-                    .then(imageBlob => {
-                        const imageObjectURL = URL.createObjectURL(imageBlob);
-                        document.getElementById('classical-classifier-img').src = imageObjectURL;
-                    })
-                    .catch(error => console.error('Błąd:', error));
-            };
-        </script>
+        <script src="/static/scripts/classifier.js"></script>
 
     </body>
 </html>
