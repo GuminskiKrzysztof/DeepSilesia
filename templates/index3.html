@@ -40,10 +40,23 @@
             margin: 20px 0;
             border: 2px solid #ddd;
         }
+        .slider-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .slider-container input {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <h1>Wizualizacja Kwantowa z Qiskit</h1>
+
+    <div class="slider-container">
+        <label for="qubit-slider">Wybierz liczbę kubitów:</label>
+        <input type="range" id="qubit-slider" min="1" max="5" value="2">
+        <span id="qubit-value">2</span>
+    </div>
 
     <div class="buttons">
         <button onclick="generateCircuit()">Generuj obwód kwantowy</button>
@@ -55,12 +68,28 @@
     </div>
 
     <script>
+        // Aktualizacja wyświetlanej wartości suwaka
+        document.getElementById('qubit-slider').oninput = function() {
+            document.getElementById('qubit-value').innerText = this.value;
+        };
+
         function generateCircuit() {
-            fetch('/generate_circuit')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('circuit-output').src = data.image_url;
-                });
+            const numQubits = document.getElementById('qubit-slider').value;
+            
+            fetch('/generate_circuit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ num_qubits: numQubits })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('circuit-output').src = data.image_url;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     </script>
 </body>

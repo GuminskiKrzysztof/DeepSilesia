@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, url_for
+from flask import Flask, render_template, jsonify, url_for, request
 import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
 from qiskit.visualization import plot_bloch_multivector
@@ -23,20 +23,28 @@ IMG_FOLDER = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 # Funkcja generująca obraz obwodu kwantowego
-@app.route('/generate_circuit')
+@app.route('/generate_circuit', methods=['POST'])
 def generate_circuit():
-    # Tworzymy obwód kwantowy
-    qc = QuantumCircuit(2)
-    qc.h(0)  # Bramki Hadamarda
-    qc.cx(0, 1)  # Bramki CNOT
+    # Odbierz dane JSON z żądania
+    data = request.get_json()
+    num_qubits = int(data['num_qubits'])
     
+    # Tworzymy obwód kwantowy
+    qc = QuantumCircuit(num_qubits)
+    
+    for i in range(num_qubits):
+        qc.h(i)  # Bramki Hadamarda na każdym kubicie
+    
+    if num_qubits > 1:
+        for i in range(num_qubits - 1):
+            qc.cx(i, i + 1)  # Bramki CNOT między sąsiednimi kubitami
+
     # Zapisz obwód do pliku jako obraz
     fig = qc.draw(output='mpl')
     image_path = os.path.join(app.config['UPLOAD_FOLDER'], 'circuit.png')
     fig.savefig(image_path)
     
     return jsonify({'image_url': url_for('static', filename='images/circuit.png')})
-
 
 # Strona główna
 @app.route('/')
