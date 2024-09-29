@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Compare</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mystyle.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <header>
+            <div class="header-container">
+                <a href="../">
+                    <h1 class="title">Quantum Artificial Intelligence</h1>
+                </a>                <nav>
+                    <a href="../">Home</a>
+                    <a href="manual">Manual</a>
+                    <a href="playground">Playground</a>
+                    <a href="">AI vs QAI</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <div class="slide-container">
+                <section class="info-section">
+                    <div class="info-card">
+                        <div class="card-content">
+                <br><h3><span class="white-text">Compare the work of classics computing and quantum one:</span></h3><br>
+                        </div>
+                    </div>
+                </section>
+                <p for="samples-slider">Select the number of data samples:</p>
+                <input type="range" min="10" max="150" value="75" class="slider" id="myRange">
+                <p><span class="yellow-text">Value: </span><span id="num_samples"></span></p>
+            </div>
+            
+            <div class="classifier-container">
+                <!-- Classical Classification-->
+                <div class="classifier">
+                    <h2>Classic Classification</h2>
+                    <button class="button-yellow" id="classical-classifier-btn">Train Classical Classification</button>
+                    <p id="classical-execution-time"></p>
+                    <img id="classical-classifier-img" src="" alt="Results of classic classification" style="display:none;" />
+                    
+                </div>
+                <!-- Quantum Classification -->
+                <div class="classifier">
+                    <h2>Quantum Classification</h2>
+                    <button class="button-yellow" id="quantum-classifier-btn">Train Quantum Classification</button>
+                    <p id="quantum-execution-time"></p>
+                    <img id="quantum-classifier-img" src="" alt="Results of quantum classification" style="display:none;" />
+                </div>                
+            </div>
+        </div>
+
+        <script src="/static/scripts/classifier.js"></script>
+
+    </body>
+</html>
