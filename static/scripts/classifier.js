@@ -1,10 +1,9 @@
-// Funkcja do wyświetlenia obrazu, jeśli src nie jest puste
 function showImageIfSrcNotEmpty(imgElement, imgSrc) {
     if (imgSrc) {
         imgElement.src = imgSrc;
-        imgElement.style.display = 'block';  // Pokaż obraz
+        imgElement.style.display = 'block';
     } else {
-        imgElement.style.display = 'none';   // Ukryj obraz, jeśli src jest puste
+        imgElement.style.display = 'none';
     }
 } 
 
@@ -18,14 +17,11 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 
-// Pobranie wartości ze slidera i wywołanie odpowiedniej funkcji
 document.getElementById('quantum-classifier-btn').onclick = function() {
     document.getElementById('quantum-execution-time').textContent = "Running...";
 
-    // Pobierz wartość ze slidera
     const numSamples = document.getElementById('myRange').value;
 
-    // Wysłanie zapytania z num_samples do backendu
     fetch('/train_quantum', {
         method: 'POST',
         headers: {
@@ -39,7 +35,6 @@ document.getElementById('quantum-classifier-btn').onclick = function() {
             const quantumImgElement = document.getElementById('quantum-classifier-img');
             showImageIfSrcNotEmpty(quantumImgElement, imageObjectURL);
 
-            // Odbierz czas wykonania z nagłówków odpowiedzi
             const executionTime = response.headers.get('Execution-Time');
             document.getElementById('quantum-execution-time').innerText = `Execution time: ${executionTime} seconds`;
         });
@@ -48,15 +43,11 @@ document.getElementById('quantum-classifier-btn').onclick = function() {
 };
 
 
-
-// Pobranie wartości ze slidera i wywołanie odpowiedniej funkcji
 document.getElementById('classical-classifier-btn').onclick = function() {
     document.getElementById('classical-execution-time').textContent = "Running...";
 
-    // Pobierz wartość ze slidera
     const numSamples = document.getElementById('myRange').value;
 
-    // Wysłanie zapytania z num_samples do backendu
     fetch('/train_classical', {
         method: 'POST',
         headers: {
@@ -70,7 +61,6 @@ document.getElementById('classical-classifier-btn').onclick = function() {
             const classicalImgElement = document.getElementById('classical-classifier-img');
             showImageIfSrcNotEmpty(classicalImgElement, imageObjectURL);
 
-            // Odbierz czas wykonania z nagłówków odpowiedzi
             const executionTime = response.headers.get('Execution-Time');
             document.getElementById('classical-execution-time').innerText = `Execution time: ${executionTime} seconds`;
         });
