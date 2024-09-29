@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let selectedMode = null;
 
-    // Event listeners for buttons
     document.getElementById("classification-button").addEventListener("click", function () {
         editor.setValue(
             `import datetime
@@ -158,9 +157,9 @@ class LinearRegressionModel:
 
     def plot_quantum_results(self, regressor, X, f):
         X_ = np.linspace(-np.pi, np.pi, 50).reshape(50, 1)
-        plt.plot(X_, f(X_), "r--", label="True function")  # Just a red dashed line without markers
+        plt.plot(X_, f(X_), "r--", label="True function")  
         # or
-        plt.plot(X_, f(X_), "ro--", label="True function")  # Red dashed line with circular markers
+        plt.plot(X_, f(X_), "ro--", label="True function")  
 
         y_ = regressor.predict(X_)
         plt.plot(X_, y_, "g-", label="Model prediction")
@@ -284,7 +283,6 @@ class IrisQuantumClassifier:
         
     });
 
-    // Handle "Run" button
     document.getElementById("run-button").addEventListener("click", function () {
         document.getElementById('run-info').textContent = "Running...";
         if (!selectedMode) {
@@ -312,10 +310,9 @@ class IrisQuantumClassifier:
             throw new Error("Network response was not ok.");
         })
         .then(blob => {
-            // Create an object URL for the image and show it
             let img = document.createElement('img');
             img.src = URL.createObjectURL(blob);
-            document.getElementById("chart").innerHTML = "";  // Clear previous image
+            document.getElementById("chart").innerHTML = ""; 
             document.getElementById("chart").appendChild(img);
             document.getElementById('run-info').textContent = "";
 
