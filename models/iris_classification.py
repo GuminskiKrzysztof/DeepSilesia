@@ -69,7 +69,7 @@ class IrisQuantumClassifier:
 
     def plot_results(self, scores):
         plt.figure()
-        plt.bar(['Train Score', 'Test Score'], scores, color=['blue', 'orange'])
+        plt.bar(['Train Score', 'Test Score'], scores, color=['#ff79bd', '#eeff73'])
         plt.ylim(0, 1)
         plt.title('Model Performance')
         plt.ylabel('Score')

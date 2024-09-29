@@ -7,13 +7,9 @@ import os
 
 app = Flask(__name__)
 
-
-
 @app.route("/")
 def home():
     return render_template("index.html")
-
-    
 
 @app.route("/manual")
 def manual():
@@ -43,11 +39,9 @@ def iris():
     img, execution_time, train_score, test_score = ir.execute_classification()
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
 
-
 @app.route("/compare")
 def compare():
     return render_template("compare.html")
-
 
 @app.route('/train_quantum', methods=['POST'])
 def train_q():
@@ -61,8 +55,6 @@ def train_q():
     # Zwróć obraz i czas wykonania
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
 
-
-
 @app.route('/train_classical', methods=['POST'])
 def train_classical():
     data = request.get_json()  # Pobranie danych JSON
@@ -74,8 +66,6 @@ def train_classical():
 
     # Zwróć obraz i czas wykonania
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
-
-
 
 
 # @app.route('/images/<path:filename>')

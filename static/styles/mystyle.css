@@ -119,6 +119,10 @@ p{
     background-color: #3B1F54;
 }
 
+.message-bubble-purple-second {
+    background-color: #3B1F54;
+}
+
 .message-bubble-yellow {
     color: black;
     background-color: #eeff73;
@@ -134,6 +138,17 @@ p{
     background-color: white;
     color: #3B1F54;
     align-self: flex-end;
+}
+
+.message-bubble-white-third {
+    background-color: white;
+    color: #3B1F54;
+    align-self: flex-end;
+}
+
+.message-bubble-yellow-second {
+    color: black;
+    background-color: #eeff73;
 }
 
 .message-bubble-purple:before {
@@ -162,6 +177,30 @@ p{
     border-bottom: 10px solid transparent;
 }
 
+.message-bubble-yellow-second:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: -13px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 15px solid #eeff73;
+    border-bottom: 10px solid transparent;
+}
+
+.message-bubble-purple-second:before {
+    content: "";
+    position: absolute;
+    bottom: 110px;
+    right: -15px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 15px solid #3B1F54;
+    border-bottom: 10px solid transparent;
+}
+
 .message-bubble-white:before {
     content: "";
     position: absolute;
@@ -179,8 +218,22 @@ p{
 .message-bubble-white-second:before {
     content: "";
     position: absolute;
-    bottom: 160px;
+    bottom: 158px;
     right: 5%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent; 
+    border-bottom: 20px solid white; 
+}
+
+.message-bubble-white-third:before {
+    content: "";
+    position: absolute;
+    bottom: 180px;
+    left: 5%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
@@ -415,6 +468,14 @@ input[type="range"] {
 
 .chat-button:hover {
     background-color: #f0f0f0;
+}
+
+.yellow-text {
+    color: yellow;
+}
+
+.white-text {
+    color: white;
 }
 
 .bubble-message {

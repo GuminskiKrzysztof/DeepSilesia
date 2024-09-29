@@ -41,7 +41,7 @@ document.getElementById('quantum-classifier-btn').onclick = function() {
 
             // Odbierz czas wykonania z nagłówków odpowiedzi
             const executionTime = response.headers.get('Execution-Time');
-            document.getElementById('quantum-execution-time').innerText = `Czas wykonania: ${executionTime} sekund`;
+            document.getElementById('quantum-execution-time').innerText = `Execution time: ${executionTime} seconds`;
         });
     })
     .catch(error => console.error('Błąd:', error));
@@ -72,7 +72,7 @@ document.getElementById('classical-classifier-btn').onclick = function() {
 
             // Odbierz czas wykonania z nagłówków odpowiedzi
             const executionTime = response.headers.get('Execution-Time');
-            document.getElementById('classical-execution-time').innerText = `Czas wykonania: ${executionTime} sekund`;
+            document.getElementById('classical-execution-time').innerText = `Execution time: ${executionTime} seconds`;
         });
     })
     .catch(error => console.error('Błąd:', error));

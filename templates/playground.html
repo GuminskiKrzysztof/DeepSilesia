@@ -34,6 +34,9 @@
         <div class="content">            
             <div class="classifier-container">
                 <div class="button-container-vertical">
+                    <h2><strong><br>Choose one of the default algorithms
+                        <br> to test on quantum computer <br>
+                        or write your own! <br><br></strong></h2>
                     <button type="button" class="button-yellow" id="classification-button"> 
                         Classification
                     </button> 
@@ -45,15 +48,19 @@
                     </button> 
                 </div>
                 <div class="classifier">
-                    <p id="code-editor">Code editor</p>
                     <div class="code-editor-div">
-                        <textarea  1500px id="code" name="code" class="code-editor-input"></textarea> 
+                        <p id="code-editor">Code editor</p>
+                        <textarea  1500px id="code" name="code" class="code-editor-input">                                             
+
+
+                                                                  </textarea> 
                         <button type="button" class="button-yellow" id="run-button">Run</button> 
                         <p id="run-info"></p>
-                        <textarea id="output" class="textarea-output" rows="5" readonly></textarea> 
+                        
+                        <div id="chart">
+                        </div>
                     </div> 
-                </div>
-                <div id="chart" class="classifier">
+                    
                 </div>
             </div>
 

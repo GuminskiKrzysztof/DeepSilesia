@@ -6,42 +6,42 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 	theme: "dracula"
 });
 
-function loadFile(filePath) {
-    fetch(filePath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.text();
-        })
-        .then(data => {
-            // Ustaw zawartość pliku w edytorze
-            editor.setValue(data);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-}
+// function loadFile(filePath) {
+//     fetch(filePath)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok ' + response.statusText);
+//             }
+//             return response.text();
+//         })
+//         .then(data => {
+//             // Ustaw zawartość pliku w edytorze
+//             editor.setValue(data);
+//         })
+//         .catch(error => {
+//             console.error('There was a problem with the fetch operation:', error);
+//         });
+// }
 
-function saveToFile() {
-	// Pobierz zawartość z edytora tekstowego (CodeMirror)
-	const content = editor.getValue();
+// function saveToFile() {
+// 	// Pobierz zawartość z edytora tekstowego (CodeMirror)
+// 	const content = editor.getValue();
 
-	// Utwórz obiekt Blob z zawartością edytora
-	const blob = new Blob([content], { type: 'text/plain' });
+// 	// Utwórz obiekt Blob z zawartością edytora
+// 	const blob = new Blob([content], { type: 'text/plain' });
 
-	// Utwórz URL dla pliku Blob
-	const fileUrl = URL.createObjectURL(blob);
+// 	// Utwórz URL dla pliku Blob
+// 	const fileUrl = URL.createObjectURL(blob);
 
-	// Utwórz element <a> i ustaw go tak, by pobierał plik
-	const a = document.createElement('a');
-	a.href = fileUrl;
-	a.download = 'code.py'; // nazwa pliku do pobrania
-	a.click();
+// 	// Utwórz element <a> i ustaw go tak, by pobierał plik
+// 	const a = document.createElement('a');
+// 	a.href = fileUrl;
+// 	a.download = 'code.py'; // nazwa pliku do pobrania
+// 	a.click();
 
-	// Zwolnij URL dla pliku Blob, aby oszczędzać pamięć
-	URL.revokeObjectURL(fileUrl);
-}
+// 	// Zwolnij URL dla pliku Blob, aby oszczędzać pamięć
+// 	URL.revokeObjectURL(fileUrl);
+// }
 
 // const output = document.getElementById("output"); 
 
