@@ -86,42 +86,7 @@ class LinearRegressionModel:
         plt.close()
         return img
 
-    # def train_classical_regressor(self):
-    #     X = np.linspace(-3, 3, self.num_samples).reshape(-1, 1)
-    #     y = np.sin(X) + 0.1 * np.random.normal(size=X.shape)
-    #     model = LinearRegression()
-
-    #     start_time = datetime.datetime.now()
-    #     model.fit(X, y)
-    #     end_time = datetime.datetime.now()
-    #     execution_time = (end_time - start_time).total_seconds()
-
-    #     return model, execution_time, X, y
-
-    # def plot_classical_results(self, model, X, y):
-    #     X_pred = np.linspace(-3, 3, 100).reshape(-1, 1)
-    #     y_pred = model.predict(X_pred)
-
-    #     plt.plot(X, y, "bo", label="Training data")
-    #     plt.plot(X_pred, y_pred, "g-", label="Model prediction")
-
-    #     plt.xlabel("X")
-    #     plt.ylabel("Y")
-    #     plt.title("Classical Regression Result")
-    #     plt.legend()
-
-    #     img = io.BytesIO()
-    #     plt.savefig(img, format='png')
-    #     img.seek(0)
-    #     plt.close()
-    #     return img
-
     def execute_quantum_regression(self):
         regressor, execution_time, X = self.train_quantum_regression()
         img = self.plot_quantum_results(regressor, X, np.sin)
         return img, execution_time
-
-    # def execute_classical_regression(self):
-    #     model, execution_time, X, y = self.train_classical_regressor()
-    #     img = self.plot_classical_results(model, X, y)
-    #     return img, execution_time
