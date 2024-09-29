@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizualizacja Kwantowa z Qiskit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wizualizacja Kwantowa z Qiskit</h1>
+
+    <div class="buttons">
+        <button onclick="generateCircuit()">Generuj obwód kwantowy</button>
+    </div>
+
+    <div class="output">
+        <h2>Obwód kwantowy:</h2>
+        <img id="circuit-output" src="" alt="Obwód kwantowy">
+    </div>
+
+    <script>
+        function generateCircuit() {
+            fetch('/generate_circuit')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('circuit-output').src = data.image_url;
+                });
+        }
+    </script>
+</body>
+</html>

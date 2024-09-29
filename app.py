@@ -15,12 +15,14 @@ from qiskit.circuit.library import RealAmplitudes, ZZFeatureMap
 from qiskit_algorithms.optimizers import COBYLA, L_BFGS_B
 from qiskit_algorithms.utils import algorithm_globals
 
+
 from qiskit_machine_learning.algorithms.classifiers import NeuralNetworkClassifier, VQC
 from qiskit_machine_learning.algorithms.regressors import NeuralNetworkRegressor, VQR
 from qiskit_machine_learning.neural_networks import SamplerQNN, EstimatorQNN
 from qiskit_machine_learning.circuit.library import QNNCircuit
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.decomposition import PCA
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -28,23 +30,32 @@ app = Flask(__name__)
 # Set random seed for reproducibility
 algorithm_globals.random_seed = 42
 
-# Train Classifier
-def train_classifier():
+def train_classifier(num_qubits=16):
     start_time = datetime.datetime.now()  # Start timing
-    num_inputs = 2
+    num_inputs = 20
     num_samples = 20
     X = 2 * algorithm_globals.random.random([num_samples, num_inputs]) - 1
-    y01 = 1 * (np.sum(X, axis=1) >= 0)  # in { 0,  1}
+
+    # Dynamically set number of qubits if not provided
+    if num_qubits is None:
+        num_qubits = num_inputs
+
+    # Optional: If more inputs than qubits, apply PCA to reduce dimensionality
+    if num_inputs > num_qubits:
+        pca = PCA(n_components=num_qubits)
+        X = pca.fit_transform(X)
+        print(f"Reduced input data from {num_inputs} to {num_qubits} dimensions using PCA.")
+
+    # Binary classification labels
+    y01 = 1 * (np.sum(X, axis=1) >= 0)  # in {0, 1}
     y = 2 * y01 - 1  # in {-1, +1}
 
     # Construct QNN with the QNNCircuit's default ZZFeatureMap and RealAmplitudes ansatz
-    qc = QNNCircuit(num_qubits=2)
+    qc = QNNCircuit(num_qubits=num_qubits)
     estimator_qnn = EstimatorQNN(circuit=qc)
 
     # Create the classifier
-    classifier = NeuralNetworkClassifier(
-        estimator_qnn, optimizer=COBYLA(maxiter=60)
-    )
+    classifier = NeuralNetworkClassifier(estimator_qnn, optimizer=COBYLA(maxiter=60))
 
     # Train the classifier
     classifier.fit(X, y)
