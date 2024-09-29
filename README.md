@@ -2,7 +2,7 @@
 
 This repository contains two branches:
 
-- **strona**: The primary branch with the implementation of the web page.
+- **website**: The primary branch with the implementation of the web page.
 - **qiskit-framework**: A secondary branch with the preliminary implementation of the chatbot and experiments with QAI
 
 ## Getting Started
@@ -32,7 +32,7 @@ http://127.0.0.1:<port-number>
 Replace <port-number> with the actual port number, which will be specified in the output when you run the server.
 
 ## Branches
-### Strona Branch 
+### Website Branch 
 The main branch contains the core of the project, including the web page implementation.
 
 ### qiskit-framework Branch
