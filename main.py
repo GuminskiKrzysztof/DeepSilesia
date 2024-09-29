@@ -15,7 +15,6 @@ def home():
 def manual():
     return render_template("manual.html")
 
-# Route for the main page
 @app.route('/playground')
 def index():
     return render_template('playground.html')
@@ -45,36 +44,24 @@ def compare():
 
 @app.route('/train_quantum', methods=['POST'])
 def train_q():
-    data = request.get_json()  # Pobranie danych JSON
-    num_samples = int(data['num_samples'])  # Odczytanie wartości num_samples
+    data = request.get_json() 
+    num_samples = int(data['num_samples'])  
     print(num_samples)
-    # Inicjalizacja klasyfikatora z odpowiednią liczbą próbek
     bc = Binary_classification(num_samples)
     img, execution_time = bc.train_classifier()
 
-    # Zwróć obraz i czas wykonania
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
 
 @app.route('/train_classical', methods=['POST'])
 def train_classical():
-    data = request.get_json()  # Pobranie danych JSON
-    num_samples = int(data['num_samples'])  # Odczytanie wartości num_samples
+    data = request.get_json()  
+    num_samples = int(data['num_samples'])  
     
-    # Inicjalizacja klasyfikatora z odpowiednią liczbą próbek
     bc = Binary_classification(num_samples)
     img, execution_time = bc.train_classical_classifier()
 
-    # Zwróć obraz i czas wykonania
     return send_file(img, mimetype='image/png'), 200, {'Execution-Time': str(execution_time)}
 
-
-# @app.route('/images/<path:filename>')
-# def send_image(filename):
-#     return send_file(os.path.join('images', filename))
-
-# @app.route('/strings/<path:filename>')
-# def send_file(filename):
-#     return send_from_directory(os.path.join('strings', filename))
 
 if __name__ == "__main__":
     app.run(debug=True)
